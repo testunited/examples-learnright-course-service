@@ -97,11 +97,11 @@ docker {
     name "testunited/examples-learnright-course:latest"
     files jar.archivePath
     copySpec.from("build/libs").into(".")
-    buildArgs(['JAR_FILE': "${bootJar.baseName}-${bootJar.version}.jar"])
+    buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}"])
 }
 dockerPrepare{
     duplicatesStrategy = 'exclude'
-
+    dependsOn = [bootJar, jar, verifierStubsJar]
 }
 test {
     useJUnitPlatform()
